@@ -1,1 +1,1 @@
-{"name":"zorko-office","version":"1.0.0","private":true,"scripts":{"build":"node build.mjs","dev":"node server.mjs","check":"node check.mjs"},"type":"module"}
+{"name":"zorko-office","version":"1.0.0","private":true,"scripts":{"build":"node build.mjs","dev":"node server.mjs","check":"node check.mjs","check:media":"node check-media.mjs"},"type":"module"}
