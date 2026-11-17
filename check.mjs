@@ -1,0 +1,4 @@
+import fs from 'node:fs';import path from 'node:path';
+const dir=path.resolve('dist');let errors=[];let count=0;
+for(const file of fs.readdirSync(dir).filter(x=>x.endsWith('.html'))){const html=fs.readFileSync(path.join(dir,file),'utf8');count++;if(!/<h1>/.test(html))errors.push(file+': missing H1');if(!/<title>/.test(html))errors.push(file+': missing title');for(const m of html.matchAll(/(?:src|href)="([^"]+)"/g)){let url=m[1];if(/^(https?:|mailto:|tel:|#)/.test(url))continue;url=url.split(/[?#]/)[0];if(!fs.existsSync(path.join(dir,url)))errors.push(file+': missing '+url)}for(const m of html.matchAll(/<img\b[^>]*>/g))if(!m[0].includes('alt='))errors.push(file+': image missing alt')}
+if(errors.length){console.error(errors.join('\n'));process.exit(1)}console.log(`Verified ${count} pages: local links, images, titles, headings and alternative text.`);

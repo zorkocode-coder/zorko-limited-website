@@ -1,0 +1,8 @@
+research/
+node_modules/
+*.tar.gz
+*.log
+outputs/
+.env
+.env.*
+!.env.example

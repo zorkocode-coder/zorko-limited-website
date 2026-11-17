@@ -1,0 +1,6 @@
+/* Blue voltage replaces the original neon yellow. Other colors stay original. */
+:root{--play:#6eb9f7;--play-surface:linear-gradient(135deg,#6eb9f7,#a38bef)}
+body.playful header,body.playful header.is-scrolled,.power-hero,.page-wipe,.playful .brand:nth-child(1){background:var(--play-surface)}
+@media(max-width:800px){body.playful nav{background:var(--play-surface)}}
+body.playful{overflow-x:clip}.power-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.power-grid>*{min-width:0}@media(max-width:800px){.power-grid{grid-template-columns:minmax(0,1fr)}}
+.playful .marquee{width:96%;margin-left:2%;transform:rotate(-1.5deg)}
