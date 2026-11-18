@@ -1,0 +1,128 @@
+[
+  {
+    "file": "index.html",
+    "title": "Zorko Group | Food Franchise, Consultancy & Careers",
+    "description": "Explore Zorko Group: food franchise opportunities, food-business consultancy, leadership and corporate careers at our Surat office.",
+    "article": false
+  },
+  {
+    "file": "company.html",
+    "title": "About Zorko Group | Company, Founders & Business",
+    "description": "Learn about Zorko Group, Zorko Limited, our founders, corporate teams and the business network supporting food entrepreneurs across India.",
+    "article": false
+  },
+  {
+    "file": "people.html",
+    "title": "Zorko Group Leadership & Corporate Teams",
+    "description": "Meet Zorko’s founders, leadership and teams in sales, operations, training, marketing, finance and HR at the Surat corporate office.",
+    "article": false
+  },
+  {
+    "file": "workplace.html",
+    "title": "Zorko Office in Surat | Workplace & Corporate Teams",
+    "description": "Explore Zorko’s corporate office in Vesu, Surat, with real workplace photography, shared spaces and the teams behind our business network.",
+    "article": false
+  },
+  {
+    "file": "culture.html",
+    "title": "Work Culture at Zorko Group | People & Recognition",
+    "description": "Discover Zorko Group’s workplace culture, employee recognition, shared learning and team moments. Explore benefits and corporate careers in Surat.",
+    "article": false
+  },
+  {
+    "file": "brands.html",
+    "title": "Zorko Group Brands | Food Business & Franchise Network",
+    "description": "Explore Zorko’s brand network and food-business formats, with routes to official brand information, franchise opportunities and consultancy.",
+    "article": false
+  },
+  {
+    "file": "journal.html",
+    "title": "Zorko Group News | Company Stories & Business Updates",
+    "description": "Read company stories, partnerships and recognition from Zorko Group. Find practical franchise, consultancy and career guides in our resources.",
+    "article": false
+  },
+  {
+    "file": "gallery.html",
+    "title": "Inside Zorko Group | Office & Team Photo Gallery",
+    "description": "See Zorko’s Surat office, corporate teams and shared moments through real photographs. Explore workplace culture and career opportunities.",
+    "article": false
+  },
+  {
+    "file": "careers.html",
+    "title": "Zorko Group Careers | Sales & Corporate Roles in Surat",
+    "description": "Explore sales, business development and corporate career areas at Zorko Group in Surat. Learn about teams, benefits and the official application route.",
+    "article": false
+  },
+  {
+    "file": "contact.html",
+    "title": "Contact Zorko Group | Surat Office & Business Enquiries",
+    "description": "Contact the Zorko corporate office in Vesu, Surat for franchise enquiries, food-business consultancy, collaborations and career application information.",
+    "article": false
+  },
+  {
+    "file": "sources.html",
+    "title": "Zorko Group | Sources, Privacy & Site Information",
+    "description": "Review the sources behind Zorko Group’s company, leadership, workplace and benefits content, and learn how site enquiries and external links work.",
+    "article": false
+  },
+  {
+    "file": "franchise.html",
+    "title": "Food Franchise Opportunities in India | Zorko Group",
+    "description": "Explore food franchise opportunities with Zorko Group. Understand vegetarian fast-food formats, operating support and the official route to discuss your city and budget.",
+    "article": false
+  },
+  {
+    "file": "franchise-investment.html",
+    "title": "Food Franchise Cost & Investment Guide | Zorko Group",
+    "description": "Understand food franchise costs, setup inclusions, recurring expenses and working capital. Prepare useful questions before requesting a current Zorko proposal.",
+    "article": false
+  },
+  {
+    "file": "consultancy.html",
+    "title": "Food Business & Franchise Consultancy | Zorko Group",
+    "description": "Explore food-business consultancy for concepts, menus, branding, marketing and operations. Prepare your project brief and connect with Zorko’s consultancy team.",
+    "article": false
+  },
+  {
+    "file": "sales-careers.html",
+    "title": "Sales & Business Development Careers in Surat | Zorko",
+    "description": "Explore sales and business development careers at Zorko Group in Surat. Learn about the work, relevant skills and questions to discuss before applying.",
+    "article": false
+  },
+  {
+    "file": "benefits.html",
+    "title": "Employee Benefits & Working Life at Zorko Group",
+    "description": "Explore employee benefits described in Zorko Spotlight, plus questions about working arrangements, well-being and eligibility to discuss with the recruitment team.",
+    "article": false
+  },
+  {
+    "file": "learning.html",
+    "title": "Learning & Career Growth at Zorko Group",
+    "description": "Explore training, shared learning and career-development questions at Zorko Group. Learn about the teams and prepare a focused conversation about your growth.",
+    "article": false
+  },
+  {
+    "file": "food-business.html",
+    "title": "Pizza, Chaat & Fast-Food Business Formats | Zorko Group",
+    "description": "Explore food-business formats including pizza, burgers, sandwiches, chaat, waffles and café concepts. Understand the questions to ask about menu and franchise fit.",
+    "article": false
+  },
+  {
+    "file": "franchise-checklist.html",
+    "title": "How to Choose a Food Franchise in India | Zorko Group",
+    "description": "Compare food franchise costs, operational support, location fit and owner responsibilities with this practical evaluation checklist.",
+    "article": true
+  },
+  {
+    "file": "consultancy-brief.html",
+    "title": "How to Prepare a Food Business Consultancy Brief | Zorko Group",
+    "description": "Prepare a useful food-business consultancy brief with your concept, location, budget assumptions, operating questions and expected deliverables.",
+    "article": true
+  },
+  {
+    "file": "resources.html",
+    "title": "Food Franchise, Consultancy & Career Guides | Zorko Group",
+    "description": "Find practical food-franchise and consultancy guides, plus information about sales careers, employee benefits and learning at Zorko Group.",
+    "article": false
+  }
+]
