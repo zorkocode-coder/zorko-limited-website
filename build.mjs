@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {addBlogPages} from './blog.mjs';
 import {applySearchContent,finishSearch,originFromEnv,writeSearchFiles} from './search.mjs';
 import {applyCorporatePages,corporateFinish} from './corporate.mjs';
 import {applyExperience,experienceFinish} from './experience.mjs';
@@ -29,6 +30,7 @@ function shell(key,page){return `<!doctype html><html lang="en"><head><meta char
 applyCorporatePages(pages);
 applyExperience(pages);
 applySearchContent(pages);
+addBlogPages(pages);
 const origin=originFromEnv();
 fs.mkdirSync('dist/assets',{recursive:true});for(const [key,page]of Object.entries(pages))fs.writeFileSync(`dist/${key}.html`,finishSearch(experienceFinish(corporateFinish(shell(key,page),key)),key,page,origin));
 fs.writeFileSync('dist/assets/favicon.svg','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#20231f"/><text x="29" y="46" font-size="40" font-family="Arial,sans-serif" font-weight="700" text-anchor="middle" fill="#fff">Z</text><circle cx="49" cy="45" r="4" fill="#ff701c"/></svg>');

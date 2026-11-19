@@ -124,5 +124,11 @@
     "title": "Food Franchise, Consultancy & Career Guides | Zorko Group",
     "description": "Find practical food-franchise and consultancy guides, plus information about sales careers, employee benefits and learning at Zorko Group.",
     "article": false
+  },
+  {
+    "file": "blog.html",
+    "title": "Franchise, Business & Careers Blog | Zorko Group",
+    "description": "Practical articles about food franchises, business consultancy, sales careers and working life.",
+    "article": false
   }
 ]
