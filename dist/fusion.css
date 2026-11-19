@@ -1,5 +1,13 @@
 /* Original Zorko energy, within the photographic corporate layout. */
 :root{--zorko-orange:#ff701c;--zorko-orange-panel:#ff7e38;--zorko-purple:#c9b8f1;--zorko-purple-soft:#eee7f8}
+.page-careers .career-subnav{position:fixed;top:auto;bottom:24px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);margin:0;padding:6px;gap:4px;justify-content:flex-start;align-items:center;background:#fffffff2;border:1px solid #20231f1f;border-radius:999px;box-shadow:0 8px 35px #20231f20;backdrop-filter:blur(18px);overflow-x:auto;scrollbar-width:none;z-index:55;font-size:11px;white-space:nowrap}
+.page-careers .career-subnav::-webkit-scrollbar{display:none}
+.page-careers .career-subnav a{display:block;flex:0 0 auto;padding:12px 19px;line-height:1.4;border:2px solid transparent;border-radius:999px;color:#5d6257;transition:border-color .25s,background .25s,color .25s}
+.page-careers .career-subnav a:after{display:none}
+.page-careers .career-subnav a:hover{color:#171917;background:#f3edf9}
+.page-careers .career-subnav a[aria-current="location"]{border:2px solid #171917;border-radius:999px;background:#fff;color:#171917}
+.page-careers footer{padding-bottom:110px}
+@media(max-width:800px){.page-careers .career-subnav{bottom:16px;max-width:calc(100% - 24px);padding:5px;gap:2px;font-size:10px}.page-careers .career-subnav a{padding:11px 14px}}
 .corporate .button{background:var(--zorko-orange);border-color:var(--zorko-orange);color:#20231f}.corporate .button:hover{background:#ff914f;border-color:#ff914f}.corporate .button:focus-visible{outline-color:#6a4b9f}
 .corporate .eyebrow:before{background:var(--zorko-orange)}.corporate .reading-progress{background:var(--zorko-orange)}
 .corporate nav a:not(.nav-cta):after{background:#8f72bb}.corporate .nav-cta:hover{background:#f0e8fa}.corporate .home-heading h1 em{color:#725494}
