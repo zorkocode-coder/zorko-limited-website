@@ -101,11 +101,67 @@ export function applySearchContent(pages){
  makePage(pages,'resources','Food Franchise, Consultancy & Career Guides | Zorko Group','Find practical food-franchise and consultancy guides, plus information about sales careers, employee benefits and learning at Zorko Group.',layout('Resources','Useful questions.<br>Practical next steps.','Explore guides and company information for food-business decisions and corporate careers.',section('Business guides',`<div class="search-cards">${guides.map(([k,h,d])=>`<a class="search-card" href="${k}.html"><h3>${h}</h3><p>${d}</p><span aria-hidden="true">↗</span></a>`).join('')}</div>`)+section('Career and workplace information','<p>Explore <a href="sales-careers.html">sales careers in Surat</a>, <a href="benefits.html">employee benefits and working life</a>, and <a href="learning.html">learning and career growth</a>. Current vacancies and employment terms are confirmed by the recruitment team.</p>'),[['franchise.html','Franchise opportunities'],['consultancy.html','Consultancy'],['careers.html','Careers']]));
 }
 
+export function applyKeywordCopy(pages) {
+ const add = (key, id, heading, copy) => {
+  const page = pages[key];
+  const articleEnd = '</article><aside class="search-related"';
+  const block = section(heading, copy, id);
+  if (page.body.includes(articleEnd)) page.body = page.body.replace(articleEnd, block + articleEnd);
+  else page.body += `<div class="wrap search-overview">${block}</div>`;
+ };
+ const update = (key, title, description) => Object.assign(pages[key], { title, description });
+
+ update('franchise', 'Vegetarian Food Franchise Opportunities in India | Zorko Group',
+  'Explore Zorko’s vegetarian fast-food franchise in India. Compare outlet formats, setup support and enquiries for Surat, Gujarat and other locations.');
+ update('franchise-investment', 'Food Franchise Cost, Fees & Investment | Zorko Group',
+  'Compare food franchise costs in India, including setup, royalty fees, working capital and operating expenses. Learn what to ask before requesting a quote.');
+ update('consultancy', 'Food Business & Restaurant Consultancy | Zorko Group',
+  'Speak with Zorko’s food business consultancy team about restaurant or café concepts, menu planning, operations and franchise expansion.');
+ update('sales-careers', 'Sales & Business Development Careers in Surat | Zorko Group',
+  'Explore franchise sales and business development work in Surat. Learn about responsibilities, interview preparation, incentives and how to apply at Zorko.');
+ update('learning', 'Sales Training & Career Growth | Zorko Group',
+  'Explore sales onboarding, coaching and career growth at Zorko Group. Prepare questions about development and progression in your next role.');
+ update('benefits', 'Employee Benefits & Work-Life Balance | Zorko Group',
+  'Explore published Zorko employee benefits and questions to ask about working hours, leave, travel and work-life balance in sales and corporate roles.');
+ update('food-business', 'Pizza, Chaat, Waffle & Fast-Food Franchise Formats | Zorko Group',
+  'Compare the needs of a pizza, burger, sandwich, chaat, waffle or café business. Find Zorko’s official vegetarian menu and routes for franchise enquiries.');
+
+ add('franchise', 'compare-franchises', 'How to choose a fast-food franchise in India',
+  '<p>To find the best food franchise for your situation, compare formats using the same assumptions about premises, owner involvement and cash reserves. For a quick-service restaurant (QSR) or vegetarian fast-food outlet, ask what the brand supplies and what the operator must arrange. Request format details before comparing an affordable entry price with the full cost.</p><p>For a food franchise in Surat, Ahmedabad, Vadodara or elsewhere in Gujarat, start with your proposed location and premises. The team can discuss location suitability and confirm availability. See <a href="https://zorko.in/our-franchise-owners/">Zorko’s franchise owner stories</a> for individual experiences, then use the <a href="franchise-checklist.html">franchise evaluation checklist</a> for your own assessment.</p>');
+ add('franchise-investment', 'budget-and-royalty', 'What does “zero royalty” mean for a franchise budget?',
+  '<p>When comparing a zero-royalty food franchise, check the agreement for other recurring costs, including purchases, technology and marketing. Ask which charges are fixed and which change with sales. Compare net operating costs as well as gross margins.</p><p>If your budget is ₹2 lakh, ₹5 lakh or ₹10 lakh, ask for a total setup cost breakdown for that budget. Separate franchise fees from fit-out, deposits, opening inventory and working capital. Confirm the current requirements with the team before committing to premises or equipment.</p>');
+ add('consultancy', 'scope-and-location', 'Choosing a restaurant or franchise consultant',
+  '<p>If you are looking for a food business consultant in Surat, begin with the problem you need help solving. A café launch may start with a menu and service plan. An existing restaurant may need a review of workflow and operating costs. A cloud kitchen brief may focus on production capacity, packaging and delivery. Confirm the services and deliverables for your project with the <a href="https://zorko.in/consultancy/">Zorko consultancy team</a>.</p><p>For franchise expansion consultancy, share your current operating procedures and explain what changes as you add locations. If you need help with a restaurant business plan, specify which assumptions, cost estimates and operating decisions the plan should cover. Use the <a href="consultancy-brief.html">consultancy brief guide</a> to prepare.</p>');
+ add('sales-careers', 'sales-job-roles', 'Sales executive and business development roles',
+  '<p>When comparing sales jobs in Surat, use the responsibilities to distinguish the roles. Inside sales often focuses on calls and follow-up. A business development executive may qualify prospects and help move opportunities forward. A franchise development role can involve discussing a prospective operator’s city, premises and budget. Sales manager roles may also cover team coaching and pipeline reviews. Confirm the duties in the specific job description.</p><p>For a fresher sales or business development interview, prepare one example of asking good questions, organising follow-up or explaining an offer clearly. Practise a short introduction and ask how the team assesses candidates, what training is provided and how incentives work. See <a href="learning.html">sales training and coaching questions</a> and <a href="benefits.html">working arrangements and benefits</a>.</p>');
+ add('careers', 'hiring-and-applications', 'How to apply for careers at Zorko Group',
+  '<p>For food company jobs in Surat, start by choosing a team that fits your experience. Explore <a href="sales-careers.html">sales and business development</a> or <a href="people.html#departments">other Zorko departments</a>. Share your CV and the role area you are interested in through the <a href="https://zorko.in/join-our-team/">official Zorko careers application</a>. Recruitment can confirm current vacancies and interview stages.</p>');
+ add('culture', 'life-at-zorko', 'What is it like working at Zorko Group?',
+  '<p>Learn about the teams at the <a href="workplace.html">Zorko office in Surat</a>, then check the <a href="benefits.html">employee benefits and work-life balance guide</a> for questions about day-to-day arrangements. If you are comparing companies to work for in Surat, ask how each team handles feedback, workload and career growth.</p>');
+ add('learning', 'career-path', 'How to evaluate a sales career path',
+  '<p>Ask what a new sales executive learns in the first weeks, how they practise customer conversations and who coaches them. As responsibilities grow, ask what changes in the work, such as owning more of the pipeline, handling more complex opportunities or mentoring colleagues. Ask the recruitment team how progression is assessed for the role.</p>');
+ add('food-business', 'compare-formats', 'Compare pizza, burger, sandwich, chaat and waffle formats',
+  '<p>For a pizza franchise, ask about oven capacity and prep time. When comparing burger and sandwich franchises, check how peak-hour assembly and ingredient storage work. For a chaat or waffle franchise, discuss the equipment, batch sizes and how long products hold their quality for takeaway. For a café franchise in India, consider seating, staffing and customer demand alongside the menu.</p><p>Looking for somewhere to eat? Browse the <a href="https://zorko.in/menu/">official Zorko vegetarian menu</a> or explore the <a href="brands.html">group’s food brands</a> for current consumer information.</p>');
+ add('brands', 'menu-and-outlets', 'Zorko menu and food brands',
+  '<p>Looking for the Zorko menu, a nearby Zorko outlet or vegetarian fast food? Start with the <a href="https://zorko.in/menu/">official menu</a> and confirm availability with the individual brand or outlet. The corporate office in Vesu handles company and business enquiries.</p>');
+ add('franchise-checklist', 'starting-out', 'How to start a food franchise',
+  '<p>Write a food franchise business plan that states who will run the outlet, where it will operate and how much cash it will need before opening. Record the expected costs, sales assumptions and supplier terms. Ask what support the franchisor can commit to in writing and check which responsibilities remain yours.</p><h3 lang="hi-Latn">Food franchise kaise shuru karein?</h3><p lang="hi-Latn">Pehle shehar, jagah aur kul budget tay karein. Franchise fee ke saath kiraya, equipment, stock aur roz ke kharch ka hisaab lagayein. Brand se training, supply aur outlet support ki jankari likhit mein maangein.</p><p>See the <a href="franchise-investment.html">food franchise cost and working capital guide</a> for a breakdown.</p>');
+ add('contact', 'enquiry-routes', 'Contact Zorko Group about a franchise, project or career',
+  '<p>Discuss <a href="franchise.html">food franchise opportunities</a>, prepare a <a href="consultancy.html">food business consultancy enquiry</a> or find the <a href="careers.html">official careers route</a>. For a visit, check the <a href="workplace.html">Surat corporate office information</a> and arrange a suitable time.</p>');
+}
+
 export function originFromEnv(){
  const value=process.env.SITE_URL;if(!value)return null;
  const u=new URL(value);if(u.protocol!=='https:'||u.pathname!=='/'||u.search||u.hash||u.username||u.password||/^(localhost|127\.|0\.)/.test(u.hostname))throw Error('SITE_URL must be the verified HTTPS site origin, without a path, query or credentials.');return u.origin;
 }
 const pageUrl=(origin,key)=>`${origin}/${key==='index'?'':key+'.html'}`;
+const shareImages = {
+ franchise: ['official/support.webp', 'Zorko outlet support team'],
+ 'sales-careers': ['official/sales.webp', 'Zorko sales team in Surat'],
+ learning: ['official/trainers.webp', 'Zorko training team'],
+ people: ['official/sales.webp', 'Zorko corporate colleagues'],
+ workplace: ['office-interior.jpg', 'Inside the Zorko office in Surat']
+};
 export function finishSearch(html,key,page,origin){
  const title=esc(page.title),description=esc(page.description),url=origin?pageUrl(origin,key):null,orgId=origin?origin+'/#organization':'#organization';
  const graph=[{'@type':'Organization','@id':orgId,name:'Zorko Group',legalName:'Zorko Limited',description:'Corporate teams and business network of Zorko Limited in Surat, India.',...(origin?{url:origin+'/'}:{}),address:{'@type':'PostalAddress',streetAddress:'310–311, Exult Shoppers, Vesu',addressLocality:'Surat',addressRegion:'Gujarat',postalCode:'395007',addressCountry:'IN'},email:'support@zorko.in',telephone:'+919909900139'}, {'@type':'WebSite','@id':origin?origin+'/#website':'#website',name:'Zorko Group',inLanguage:'en-IN',publisher:{'@id':orgId},...(origin?{url:origin+'/'}:{})}, {'@type':'WebPage',name:page.title,description:page.description,inLanguage:'en-IN',isPartOf:{'@id':origin?origin+'/#website':'#website'},...(url?{url}:{}),about:{'@id':orgId}}];
@@ -115,6 +171,12 @@ export function finishSearch(html,key,page,origin){
  html=html.replace(/<title>[\s\S]*?<\/title>/,`<title>${title}</title>`).replace(/<meta name="description" content="[^"]*">/,`<meta name="description" content="${description}">`).replace(/<meta property="og:title" content="[^"]*">/,`<meta property="og:title" content="${title}">`).replace(/<meta property="og:description" content="[^"]*">/,`<meta property="og:description" content="${description}">`).replace('<meta property="og:type" content="website">',`<meta property="og:type" content="${page.article?'article':'website'}">`).replace('</head>',tags+'</head>').replace('<html lang="en">','<html lang="en-IN">');
  html=html.replace('aria-label="Zorko Limited corporate home"','aria-label="Zorko Group corporate home"').replaceAll('<span class="wordmark-limited">LIMITED</span>','<span class="wordmark-limited">GROUP</span>').replace('Zorko Limited<br>People. Operations. Shared ambition.','Zorko Group<br>Food businesses. People. Shared ambition.').replace('ZORKO LIMITED</strong>','ZORKO GROUP</strong>').replace('© 2026 ZORKO Limited · Corporate website concept','© 2026 Zorko Limited · Zorko Group corporate website').replace('href="journal.html">Journal & milestones</a>','href="journal.html">News & milestones</a><a href="resources.html">Business & career guides</a>').replace('href="brands.html">Brand portfolio</a>','href="brands.html">Brand portfolio</a><a href="franchise.html">Franchise opportunities</a><a href="consultancy.html">Food-business consultancy</a>').replace('href="careers.html">Careers ↗</a>','href="careers.html">Careers ↗</a><a href="sales-careers.html">Sales careers</a><a href="benefits.html">Benefits & working life</a><a href="learning.html">Learning & growth</a>');
  html=html.replace(/<img\b[^>]*>/g,tag=>tag.includes('decoding=')?tag:tag.replace('<img','<img decoding="async"'));
+ if (origin) {
+  const [image, alt] = shareImages[key] ?? ['reception.jpg', 'Reception at the Zorko corporate office in Surat'];
+  const imageUrl = esc(`${origin}/assets/${image}`);
+  html = html.replace(/<meta property="og:image" content="[^"]*">/,
+   `<meta property="og:image" content="${imageUrl}"><meta property="og:image:alt" content="${esc(alt)}"><meta name="twitter:image" content="${imageUrl}"><meta name="twitter:image:alt" content="${esc(alt)}">`);
+ }
  return html.replace('Business & career guides</a>', 'Business & career guides</a><a href="blog.html">Blog</a>');
 }
 export function writeSearchFiles(pages,origin){

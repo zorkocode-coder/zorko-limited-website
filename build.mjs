@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import {addBlogPages} from './blog.mjs';
-import {applySearchContent,finishSearch,originFromEnv,writeSearchFiles} from './search.mjs';
+import {applyKeywordCopy,applySearchContent,finishSearch,originFromEnv,writeSearchFiles} from './search.mjs';
 import {applyCorporatePages,corporateFinish} from './corporate.mjs';
 import {applyExperience,experienceFinish} from './experience.mjs';
 const links=[['index','Home'],['franchise','Franchise'],['consultancy','Consultancy'],['company','About us'],['careers','Careers']];
@@ -30,6 +30,7 @@ function shell(key,page){return `<!doctype html><html lang="en"><head><meta char
 applyCorporatePages(pages);
 applyExperience(pages);
 applySearchContent(pages);
+applyKeywordCopy(pages);
 addBlogPages(pages);
 const origin=originFromEnv();
 fs.mkdirSync('dist/assets',{recursive:true});for(const [key,page]of Object.entries(pages))fs.writeFileSync(`dist/${key}.html`,finishSearch(experienceFinish(corporateFinish(shell(key,page),key)),key,page,origin));
