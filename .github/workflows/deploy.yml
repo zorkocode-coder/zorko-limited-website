@@ -67,6 +67,12 @@ jobs:
       - name: Verify public homepage
         run: |
           set -euo pipefail
+          echo "Public DNS addresses:"
+          getent ahostsv4 zorkogroup.com || true
+          echo "HTTP response:"
+          curl -sI --max-time 20 http://zorkogroup.com/ || true
+          echo "Direct Hostinger HTTPS response:"
+          curl -sI --max-time 20 --resolve zorkogroup.com:443:153.92.6.53 https://zorkogroup.com/ || true
           curl --fail --location --retry 5 --retry-delay 5 "$SITE_URL/?deployment=${{ github.sha }}" -o /tmp/homepage.html
           grep -q 'Zorko Group' /tmp/homepage.html
           grep -q 'office-hero' /tmp/homepage.html
