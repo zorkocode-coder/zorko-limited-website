@@ -1,0 +1,73 @@
+name: Check Hostinger connection
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/hostinger-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  connection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate configured secrets
+        shell: bash
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.HOSTINGER_DEPLOY_PATH }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          set -euo pipefail
+          for name in HOST PORT USERNAME SSHPASS DEPLOY_PATH SITE_URL; do
+            if [ -z "${!name}" ]; then
+              echo "::error::Missing configuration: $name (check the corresponding repository secret)"
+              exit 1
+            fi
+          done
+          [[ "$PORT" =~ ^[0-9]+$ ]]
+          [[ "$DEPLOY_PATH" == /* ]]
+          echo "All six required secrets are populated."
+      - name: Install SSH password client
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+      - name: Test SSH and deployment directory without changing server files
+        shell: bash
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.HOSTINGER_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          printf -v remote_path '%q' "$DEPLOY_PATH"
+          sshpass -e ssh -p "$PORT" \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=20 \
+            -o NumberOfPasswordPrompts=1 \
+            -o PreferredAuthentications=password,keyboard-interactive \
+            -o PubkeyAuthentication=no \
+            "$USERNAME@$HOST" "bash -s -- $remote_path" <<'REMOTE'
+          set -eu
+          target="$1"
+          test -d "$target" || { echo "ERROR: Deployment directory does not exist."; exit 1; }
+          test -r "$target" || { echo "ERROR: Deployment directory is not readable."; exit 1; }
+          test -w "$target" || { echo "ERROR: Deployment directory is not writable."; exit 1; }
+          echo "PASS: SSH authentication and deployment folder access."
+          if [ -f "$target/index.php" ] || [ -d "$target/wp-admin" ]; then
+            echo "INFO: WordPress files are present."
+          fi
+          if [ -f "$target/index.html" ]; then
+            echo "INFO: An HTML index is present."
+          fi
+          echo "No server files were changed."
+          REMOTE
