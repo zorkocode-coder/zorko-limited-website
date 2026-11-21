@@ -1,0 +1,73 @@
+name: Deploy website to Hostinger
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: hostinger-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SITE_URL: ${{ secrets.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify production website
+        run: |
+          set -eu
+          test "$SITE_URL" = "https://zorkogroup.com"
+          npm run build
+          npm run check
+          npm run check:seo
+      - name: Install deployment tools
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass rsync
+      - name: Back up existing web files and deploy
+        shell: bash
+        env:
+          HOST: ${{ secrets.HOSTINGER_HOST }}
+          PORT: ${{ secrets.HOSTINGER_PORT }}
+          USERNAME: ${{ secrets.HOSTINGER_USERNAME }}
+          SSHPASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          DEPLOY_PATH: ${{ secrets.HOSTINGER_DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          test "$DEPLOY_PATH" = "/home/u481622052/domains/zorkogroup.com/public_html"
+          mkdir -p "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          SSH_OPTS="-p $PORT -o StrictHostKeyChecking=accept-new -o ConnectTimeout=30 -o ServerAliveInterval=15"
+          printf -v target '%q' "$DEPLOY_PATH"
+          sshpass -e ssh $SSH_OPTS "$USERNAME@$HOST" "bash -s -- $target" <<'REMOTE'
+          set -euo pipefail
+          target="$1"
+          test -d "$target"
+          backup="$(dirname "$target")/deployment-backups"
+          mkdir -p "$backup"
+          if [ ! -f "$backup/before-static-site.tar.gz" ]; then
+            tar -czf "$backup/before-static-site.tar.gz" -C "$target" .
+          fi
+          REMOTE
+          rsync -az --delay-updates -e "sshpass -e ssh $SSH_OPTS" dist/ "$USERNAME@$HOST:$DEPLOY_PATH/"
+          sshpass -e ssh $SSH_OPTS "$USERNAME@$HOST" "bash -s -- $target" <<'REMOTE'
+          set -euo pipefail
+          target="$1"
+          test -s "$target/index.html"
+          if [ -f "$target/.htaccess" ] && [ ! -f "$target/.htaccess.before-static" ]; then
+            cp "$target/.htaccess" "$target/.htaccess.before-static"
+          fi
+          printf '%s\n' 'DirectoryIndex index.html index.php' > "$target/.htaccess"
+          echo "Website files deployed successfully."
+          REMOTE
+      - name: Verify public homepage
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 5 --retry-delay 5 "$SITE_URL/?deployment=${{ github.sha }}" -o /tmp/homepage.html
+          grep -q 'Zorko Group' /tmp/homepage.html
+          grep -q 'office-hero' /tmp/homepage.html
+          echo "Live Zorko Group homepage verified."
