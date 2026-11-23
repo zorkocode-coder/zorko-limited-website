@@ -50,13 +50,17 @@ jobs:
               with open('candidate.mp4','wb') as f:
                   for chunk in res.iter_content(262144): f.write(chunk)
           ff=imageio_ffmpeg.get_ffmpeg_exe()
-          subprocess.run([ff,'-hide_banner','-i','candidate.mp4','-vf','fps=1/6,scale=160:120:force_original_aspect_ratio=decrease,pad=160:120:(ow-iw)/2:(oh-ih)/2','-frames:v','60','candidate-%03d.jpg'],check=True,stderr=subprocess.PIPE)
+          subprocess.run([ff,'-hide_banner','-i','candidate.mp4','-vf','fps=1,scale=160:120:force_original_aspect_ratio=decrease,pad=160:120:(ow-iw)/2:(oh-ih)/2','-frames:v','60','candidate-%03d.jpg'],check=True,stderr=subprocess.PIPE)
           files=sorted(Path('.').glob('candidate-*.jpg'))
           sheet=Image.new('RGB',(640,144*((len(files)+3)//4)))
           draw=ImageDraw.Draw(sheet)
           for i,path in enumerate(files):
-              x=i%4*160;y=i//4*144;sheet.paste(Image.open(path),(x,y));draw.text((x+4,y+121),str(i*6)+'s')
+              x=i%4*160;y=i//4*144;sheet.paste(Image.open(path),(x,y));draw.text((x+4,y+121),str(i)+'s')
           buf=io.BytesIO();sheet.save(buf,format='JPEG',quality=55); print('CANDIDATE='+base64.b64encode(buf.getvalue()).decode())
+          for t in (1,12,18,24,30):
+              target='shot-'+str(t)+'.jpg'
+              subprocess.run([ff,'-hide_banner','-loglevel','error','-ss',str(t),'-i','candidate.mp4','-frames:v','1','-vf','scale=480:-1','-q:v','5',target],check=True)
+              print('SHOT'+str(t)+'='+base64.b64encode(Path(target).read_bytes()).decode())
           PY
       - name: Retain review images
         if: always()
