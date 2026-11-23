@@ -1,0 +1,60 @@
+name: Office tour preview check
+on:
+  pull_request:
+    paths:
+      - 'dist/*office*.html'
+      - '.github/workflows/office-preview-check.yml'
+permissions:
+  contents: read
+jobs:
+  preview:
+    if: github.head_ref == 'codex/immersive-office-tour'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check the preview in Chromium
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/office-qa"
+          python3 -m http.server 8011 --bind 127.0.0.1 --directory dist >"$RUNNER_TEMP/server.log" 2>&1 &
+          cd "$RUNNER_TEMP/office-qa"
+          npm install --no-save --ignore-scripts puppeteer-core@23.11.1 --silent
+          node --input-type=module <<'JS'
+          import puppeteer from 'puppeteer-core';
+          const browser = await puppeteer.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--disable-dev-shm-usage']});
+          try {
+            const page = await browser.newPage();
+            for (const [name,width,height] of [['desktop',1440,900],['mobile',390,844]]) {
+              await page.setViewport({width,height});
+              await page.goto('http://127.0.0.1:8011/ZORKO-office-visit.html');
+              await page.waitForSelector('#source[type=file]');
+              if (await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth)) throw Error('Horizontal overflow on '+name);
+              await page.screenshot({path:name+'.png'});
+            }
+          } finally { await browser.close(); }
+          JS
+      - name: Inspect the original public film
+        if: always()
+        run: |
+          set -eu
+          mkdir -p "$RUNNER_TEMP/office-qa"
+          cd "$RUNNER_TEMP/office-qa"
+          python3 -m venv venv
+          venv/bin/pip -q install yt-dlp
+          venv/bin/yt-dlp --no-playlist --socket-timeout 12 --retries 1 --no-warnings -f 'best[height<=480]/worst' -o 'inspection.%(ext)s' 'https://www.youtube.com/watch?v=CraQLVdyRYs'
+          clip=$(find . -maxdepth 1 -name 'inspection.*' -type f | head -1)
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          ffprobe -v error -show_entries format=duration -of default=nw=1 "$clip"
+          ffmpeg -loglevel error -i "$clip" -vf 'fps=1/10,scale=200:-2,tile=4x4' -frames:v 6 'frames-%02d.jpg'
+      - name: Retain review images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: office-review
+          path: |
+            ${{ runner.temp }}/office-qa/*.png
+            ${{ runner.temp }}/office-qa/frames-*.jpg
+          retention-days: 2
