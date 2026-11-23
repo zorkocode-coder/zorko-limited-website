@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en-IN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#17241f"><meta name="robots" content="noindex,nofollow"><title>Inside ZORKO · Interactive office tour</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="office-visit.css"></head>
+<body><div id="experience"><header><a class="brand" href="index.html" aria-label="ZORKO company home"><strong>ZORKO</strong><span>LIMITED</span></a><span class="header-line"></span><span class="header-title">Head office tour</span><button class="directory-open" id="directory-open" aria-haspopup="dialog"><i aria-hidden="true">▦</i> Directory</button></header>
+<main><section id="stage" aria-label="Interactive office view" tabindex="0"><img id="backdrop" src="assets/reception.jpg" alt="Reception at ZORKO Limited in Surat" fetchpriority="high"><canvas id="world" aria-hidden="true"></canvas><div class="shade"></div>
+<div class="location"><span class="dot"></span> Surat, Gujarat</div>
+<div class="utilities"><button id="motion" aria-label="Scene motion" aria-pressed="true" title="Toggle scene motion">Motion on</button><button id="full" aria-label="Enter full screen" title="Full screen">⛶</button></div>
+<div class="scene-copy"><div class="overline" id="kicker">ZORKO Limited</div><h1 id="heading">Inside <em>ZORKO.</em></h1><p id="description">Walk through our Surat head office.</p><button id="enter">Enter the office <span aria-hidden="true">↗</span></button></div>
+<button id="portal" hidden><span class="portal-icon" aria-hidden="true">↑</span><span id="portal-name"></span></button>
+<div class="view-tools" hidden><button id="less" aria-label="Zoom out">−</button><span id="zoom-label">1×</span><button id="more" aria-label="Zoom in">+</button></div>
+<div class="load" role="status" hidden>Opening view…</div></section>
+<section class="console" aria-label="Tour controls"><div class="control-row"><div><div class="overline ink">Office route</div><span id="instruction">Choose a stop or enter at reception.</span></div><div class="stepper"><button id="prev" aria-label="Previous view" disabled>←</button><span id="counter">00 / 09</span><button id="next" aria-label="Next view">→</button></div></div>
+<nav id="rail" aria-label="Office stops"></nav></section></main>
+<dialog id="directory"><div class="dialog-head"><div><div class="overline ink">Surat head office</div><h2>Office directory</h2></div><button id="close" aria-label="Close directory">×</button></div><div id="directory-list"></div><nav class="links" aria-label="Company pages"><a href="people.html">Our people ↗</a><a href="workplace.html">Workplace ↗</a><a href="careers.html">Careers ↗</a></nav></dialog><div id="spoken" class="sr" aria-live="polite"></div></div>
+<script defer src="office-renderer.js"></script><script defer src="office-visit.js"></script></body></html>
