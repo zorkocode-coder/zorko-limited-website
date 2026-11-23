@@ -36,24 +36,17 @@ jobs:
             }
           } finally { await browser.close(); }
           JS
-      - name: Locate original film in public ZORKO media
+      - name: Inspect public stills from the office film
         run: |
+          cd "$RUNNER_TEMP/office-qa"
           python3 - <<'PY'
-          import re,requests,html
-          for domain in ['zorko.in','zorkogroup.com']:
-              try:
-                  data=requests.get('https://'+domain+'/wp-json/wp/v2/media',params={'media_type':'video','per_page':100,'_fields':'source_url,title'},timeout=15)
-                  print(domain, 'media catalog:',data.status_code)
-                  if data.ok:
-                      for entry in data.json(): print('VIDEO:',entry.get('source_url',''))
-              except Exception as exc: print('Catalog unavailable:',type(exc).__name__)
-          try:
-              page=requests.get('https://zorko.in/our-team/',timeout=15)
-              urls=re.findall(r'''https?://[^\s"'<>]+''',html.unescape(page.text))
-              print('Team page',page.status_code)
-              for url in sorted(set(urls)):
-                  if '.mp4' in url.lower() or 'CraQLVdyRYs' in url: print('TEAM MEDIA:',url[:260])
-          except Exception as exc: print('Team page unavailable:',type(exc).__name__)
+          import requests,base64
+          for index in (1,2,3):
+              response=requests.get(f'https://i.ytimg.com/vi/CraQLVdyRYs/hq{index}.jpg',timeout=20)
+              if response.ok and response.headers.get('content-type','').startswith('image/'):
+                  with open(f'frames-{index}.jpg','wb') as output: output.write(response.content)
+                  print('OFFICESTILL'+str(index)+'='+base64.b64encode(response.content).decode())
+              else: print('Still unavailable',index,response.status_code)
           PY
       - name: Retain review images
         if: always()
